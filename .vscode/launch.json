@@ -5,11 +5,11 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "calculix_without_inp",
+            "name": "calculix_MT",
             "type": "cppdbg",
             "request": "launch",
-            "program": "c:\\calculix\\CalculiX\\ccx_2.15_without_inp\\src\\ccx_2.15.exe",
-            "args": [],
+            "program": "c:\\calculix\\CalculiX\\ccx_2.15_MT\\src\\ccx_2.15.exe",
+            "args": ["-i","1_demo"],
             "stopAtEntry": true,
             "cwd": "${workspaceFolder}",
             "environment": [],
