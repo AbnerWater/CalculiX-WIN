@@ -1,5 +1,5 @@
 # CalculiX-win
-### just for study
+ just for study
 ## require:
 * mingw64
 * vscode
