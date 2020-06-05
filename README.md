@@ -1,2 +1,2 @@
-# CalculiX-in-Visual-Studio
+# CalculiX-win
 study
