@@ -15,9 +15,7 @@
 /*     along with this program; if not, write to the Free Software       */
 /*     Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.         */
 
-//#ifdef __WIN32
-//_set_output_format(_TWO_DIGIT_EXPONENT);
-//#endif
+
 
 #ifdef CALCULIX_MPI
 #include <spoolesMPI.h>
@@ -35,6 +33,9 @@ ITG myid = 0, nproc = 0;
 
 int main(int argc, char *argv[])
 {
+#ifdef __WIN32
+_set_output_format(_TWO_DIGIT_EXPONENT);
+#endif
 
   FILE *f1;
 
@@ -104,45 +105,45 @@ int main(int argc, char *argv[])
   MPI_Comm_size(MPI_COMM_WORLD, &nproc);
 #endif
 
-  if (argc == 1)
-  {
-    printf("Usage: CalculiX.exe -i jobname\n");
-    FORTRAN(stop, ());
-  }
-  else
-  {
-    for (i = 1; i < argc; i++)
-    {
-      if (strcmp1(argv[i], "-i") == 0)
-      {
-        printf("\n %s", argv[i]);
-        strcpy(jobnamec, argv[i + 1]);
-        strcpy1(jobnamef, argv[i + 1], 132);
-        jin++;
-        break;
-      }
-      if (strcmp1(argv[i], "-v") == 0)
-      {
-        printf("\nThis is Version 2.15\n\n");
-        FORTRAN(stop, ());
-      }
-    }
-    if (jin == 0)
-    {
-      strcpy(jobnamec, argv[1]);
-      strcpy1(jobnamef, argv[1], 132);
-    }
-
-    for (i = 1; i < argc; i++)
-    {
-      if (strcmp1(argv[i], "-o") == 0)
-      {
-        strcpy(output, argv[i + 1]);
-        break;
-      }
-    }
-  }
-  //setenv("CCX_JOBNAME_GETJOBNAME",jobnamec,1);
+	// if (argc == 1)
+	// {
+	// printf("Usage: CalculiX.exe -i jobname\n");
+	// FORTRAN(stop, ());
+	// }
+	// else
+	// {
+	// for (i = 1; i < argc; i++)
+	// {
+	//     if (strcmp1(argv[i], "-i") == 0)
+	//     {
+	//     printf("\n %s", argv[i]);
+	//     strcpy(jobnamec, argv[i + 1]);
+	//     strcpy1(jobnamef, argv[i + 1], 132);
+	//     jin++;
+	//     break;
+	//     }
+	//     if (strcmp1(argv[i], "-v") == 0)
+	//     {
+	//     printf("\nThis is Version 2.15\n\n");
+	//     FORTRAN(stop, ());
+	//     }
+	// }
+	// if (jin == 0)
+	// {
+	//     strcpy(jobnamec, argv[1]);
+	//     strcpy1(jobnamef, argv[1], 132);
+	// }
+	
+	// for (i = 1; i < argc; i++)
+	// {
+	//     if (strcmp1(argv[i], "-o") == 0)
+	//     {
+	//     strcpy(output, argv[i + 1]);
+	//     break;
+	//     }
+	// }
+	// }
+	  //setenv("CCX_JOBNAME_GETJOBNAME",jobnamec,1);
   putenv("CCX_JOBNAME_GETJOBNAME=jobnamec");
 
 #ifdef BAM
@@ -151,6 +152,8 @@ int main(int argc, char *argv[])
   FORTRAN(uexternaldb, (&lop, &lrestart, time, &dtime, &kstep, &kinc));
 #endif
 
+  strcpy(jobnamec, "test");
+	strcpy1(jobnamef, "test", 132);
   FORTRAN(openfile, (jobnamef, output));
 
   printf("\n************************************************************\n\n");
@@ -159,7 +162,12 @@ int main(int argc, char *argv[])
   printf("software, and you are welcome to redistribute it under\n");
   printf("certain conditions, see gpl.htm\n\n");
   printf("************************************************************\n\n");
-  printf("You are using an executable made on Thu, May 28, 2020 10:54:59 AM\n");
+  printf("	 Exdin Solutions Sp. z o.o., Copyright(C)\n");
+  printf("	     http://www.exdinsolutions.com/\n");
+  printf("          Built for 64_i4 O2 bit Windows by 3rav\n");
+  printf("INTEL MKL2019U5, SPOOLES 2.2, ARPACK, MFRONT, OpenBLAS 0.3.5\n\n");
+  printf("************************************************************\n\n");
+  printf("You are using an executable made on 2020年06月 5日  9:17:31\n");
   fflush(stdout);
 
   istep = 0;
@@ -185,7 +193,10 @@ int main(int argc, char *argv[])
 
   /* conservative estimate of the fields to be allocated */
 
-  readinput(jobnamec, &inpc, &nline, &nset_, ipoinp, &inp, &ipoinpc, ithermal, &nuel_);
+  // readinput(jobnamec, &inpc, &nline, &nset_, ipoinp, &inp, &ipoinpc, ithermal, &nuel_);
+  nset_=2;
+  nuel_=1;
+  nline=40;
 
   NNEW(set, char, 81 * nset_);
   NNEW(meminset, ITG, nset_);
@@ -667,6 +678,8 @@ int main(int argc, char *argv[])
 
     if (istep == 0)
       mortar = -1;
+    if (istep > 0)
+      istat=-1;
     FORTRAN(calinput, (co, &nk, kon, ipkon, lakon, &nkon, &ne,
                        nodeboun, ndirboun, xboun, &nboun,
                        ipompc, nodempc, coefmpc, &nmpc, &nmpc_, nodeforc, ndirforc, xforc, &nforc,
@@ -1092,7 +1105,7 @@ int main(int argc, char *argv[])
     RENEW(xbodyold, double, 7 * nbody);
 
     RENEW(ipompc, ITG, nmpc);
-    RENEW(labmpc, char, 20 * nmpc + 1);
+    RENEW(labmpc, char, 20 * nmpc);
     RENEW(ikmpc, ITG, nmpc);
     RENEW(ilmpc, ITG, nmpc);
     RENEW(fmpc, double, nmpc);

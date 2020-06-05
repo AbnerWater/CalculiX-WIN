@@ -1,5 +1,5 @@
 
-CFLAGS = -Wall -O3 -g -I ../../../SPOOLES.2.2 -DARCH="Linux" -DSPOOLES -DARPACK -DMATRIXSTORAGE -DNETWORKOUT
+CFLAGS = -Wall -O3 -g -I ../../SPOOLES.2.2 -DARCH="Linux" -DSPOOLES -DARPACK -DMATRIXSTORAGE -DNETWORKOUT
 FFLAGS = -Wall -O3 -g  
 
 CC=gcc
@@ -18,12 +18,12 @@ OCCXF = $(SCCXF:.f=.o)
 OCCXC = $(SCCXC:.c=.o)
 OCCXMAIN = $(SCCXMAIN:.c=.o)
 
-DIR=../../../SPOOLES.2.2
+DIR=../../SPOOLES.2.2
 LIBDIR=c:/msys64/mingw64/x86_64-w64-mingw32/lib
 
 LIBS = \
        $(DIR)/spooles.a \
-       ../../../ARPACK/libarpack_MINGW64.a \
+       ../../ARPACK/libarpack_MINGW64.a \
 	   $(LIBDIR)/libpthread.a\
 	   $(LIBDIR)/libm.a \
 
