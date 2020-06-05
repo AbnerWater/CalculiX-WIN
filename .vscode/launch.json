@@ -18,11 +18,11 @@
             "miDebuggerPath": "C:\\msys64\\mingw64\\bin\\gdb.exe",
         },
         {
-            "name": "calculix",
+            "name": "calculix_develop",
             "type": "cppdbg",
             "request": "launch",
             "program": "c:\\calculix\\CalculiX\\ccx_2.15\\src\\ccx_2.15.exe",
-            "args": ["-i","1_demo"],
+            "args": [],
             "stopAtEntry": true,
             "cwd": "${workspaceFolder}",
             "environment": [],
